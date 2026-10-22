@@ -1,0 +1,64 @@
+---
+description: Branch names, commit messages, PR titles, and git safety for Torba
+alwaysApply: true
+---
+
+# Git flow
+
+Full details: root `README.md`. Apply to every branch, commit, PR, and **generated commit message**.
+
+## Branches
+
+- Land on `main` only via PR + review
+- One ticket = one branch
+- Feature: `feature/pe-<number>-<short-kebab-slug>` (English, lowercase)
+- Fix with no new behavior: `fix/<short-kebab-slug>`
+
+```text
+feature/pe-10354-home-page
+fix/cart-overlay-scroll-lock
+```
+
+## Commit message generation (critical)
+
+When suggesting or writing a commit message:
+
+1. Inspect the **full** change set (`git status` / staged + unstaged), not one open file
+2. Summarize the **main outcome** of the whole diff in one line
+3. Never write `docs: update README…` if the diff also adds apps, packages, configs, tests, etc.
+4. Use the project format below — not vague “update files” / “update README”
+
+Format:
+
+```text
+<type>(<folder>): <outcome>
+```
+
+- Types: `feat` `fix` `perf` `refactor` `chore` `ci` `docs` `test` `build` `style` `revert`
+- Folder = `apps/web` | `apps/api` | `packages/shared` when **one** area dominates
+- Changes across monorepo root + multiple apps → **omit** `(folder)`
+- After `:` lowercase outcome (what landed), not a file list
+- Ticket when known: `[PE-10354]`
+
+```text
+# good — scaffold spans web + api + shared + root
+feat: scaffold the web/api monorepo with shared types, tooling, and docs
+
+# good — single area
+feat(apps/web): [PE-10354] add the home page shell
+
+# bad — ignores most of the diff
+docs: update README.md with project overview
+```
+
+PR title = what lands on `main` (same style, or `[PE-10354] Add …`).
+
+## Never put in commits
+
+Do **not** add to message, body, or trailers:
+
+- `Co-authored-by: Cursor …` / `Cursor Agent …`
+- `Made with Cursor` / agent signatures / AI footers
+- Any other Cursor / AI co-author line
+
+Commit only when the user explicitly asks. Do not push unless they explicitly ask to push.

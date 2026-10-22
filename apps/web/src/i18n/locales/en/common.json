@@ -1,0 +1,40 @@
+{
+  "brand": {
+    "name": "Torba"
+  },
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "checkout": "Checkout",
+    "cart": "Cart",
+    "searchPlaceholder": "Search products…"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "about": "About Torba",
+    "support": "Support",
+    "sellers": "For sellers (soon)"
+  },
+  "pages": {
+    "home": {
+      "title": "Home",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "catalog": {
+      "title": "Catalog",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "product": {
+      "title": "Product",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "checkout": {
+      "title": "Checkout",
+      "description": "Content will appear after Ready for Dev designs."
+    }
+  },
+  "language": {
+    "uk": "UA",
+    "en": "EN"
+  }
+}

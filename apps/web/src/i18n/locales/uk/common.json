@@ -1,0 +1,40 @@
+{
+  "brand": {
+    "name": "Torba"
+  },
+  "nav": {
+    "home": "Головна",
+    "catalog": "Каталог",
+    "checkout": "Оформлення",
+    "cart": "Кошик",
+    "searchPlaceholder": "Пошук товарів…"
+  },
+  "footer": {
+    "rights": "Усі права захищені.",
+    "about": "Про Torba",
+    "support": "Підтримка",
+    "sellers": "Продавцям (скоро)"
+  },
+  "pages": {
+    "home": {
+      "title": "Головна",
+      "description": "Контент з’явиться після макетів Ready for Dev."
+    },
+    "catalog": {
+      "title": "Каталог",
+      "description": "Контент з’явиться після макетів Ready for Dev."
+    },
+    "product": {
+      "title": "Товар",
+      "description": "Контент з’явиться після макетів Ready for Dev."
+    },
+    "checkout": {
+      "title": "Оформлення",
+      "description": "Контент з’явиться після макетів Ready for Dev."
+    }
+  },
+  "language": {
+    "uk": "UA",
+    "en": "EN"
+  }
+}

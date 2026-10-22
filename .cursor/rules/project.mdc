@@ -1,0 +1,34 @@
+---
+description: Torba monorepo layout, ownership, stack, and coding defaults
+alwaysApply: true
+---
+
+# Torba marketplace
+
+Learning OLX-style marketplace. Prefer Bun. Docs: root `README.md` + Figma Ready for Dev only.
+
+## Layout
+
+| Path | Owner | Role |
+| --- | --- | --- |
+| `apps/web` | Frontend | Next.js App Router + Tailwind + react-i18next |
+| `apps/api` | Backend | NestJS (`/api`, port 4000) |
+| `packages/shared` | FE + BE | Shared DTOs / helpers (`@torba/shared`) |
+| `scripts/` | tooling | e.g. aggregated `bun run test` |
+
+## Ownership
+
+- Do not edit `apps/api` on a frontend ticket (and vice versa) unless the ticket says so
+- Cross-contract changes go in `packages/shared` and must be called out in the PR
+- Add `features/<name>/` only when the feature exists — no empty placeholder folders
+- MVP: home, catalog/search, product, cart sidebar, checkout — no seller cabinet in v1
+
+## Code defaults
+
+- TypeScript `strict`
+- Web: keep the shell simple until Ready for Dev — stub pages, no-op controls
+- Add `apps/web/src/features/<name>/` only with real feature logic
+- Import shared types from `@torba/shared`
+- Tests next to code (`*.test.ts(x)` / `*.spec.ts`); test logic, not pure layout
+- After shared type changes: `bun run build:shared`
+- Run `bun run test` / `bun run lint` from the repo root when verifying
