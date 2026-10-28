@@ -1,4 +1,5 @@
 import { defineConfig } from 'prisma/config';
+import { getDatabaseUrl } from './src/prisma/database-url.js';
 
 try {
   process.loadEnvFile('../../.env');
@@ -11,6 +12,6 @@ export default defineConfig({
     seed: 'bun prisma/seed.ts',
   },
   datasource: {
-    url: process.env.DATABASE_URL ?? 'postgresql://torba:torba@localhost:5432/torba?schema=public',
+    url: getDatabaseUrl(),
   },
 });

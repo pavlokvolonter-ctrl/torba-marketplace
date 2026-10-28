@@ -1,11 +1,15 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient, type DeliveryType } from '../src/generated/prisma/client.js';
+import { getDatabaseUrl } from '../src/prisma/database-url.js';
+
+try {
+  process.loadEnvFile(new URL('../../../.env', import.meta.url));
+} catch {
+  // A missing .env is fine; getDatabaseUrl reports a missing variable.
+}
 
 const prisma = new PrismaClient({
-  adapter: new PrismaPg({
-    connectionString:
-      process.env.DATABASE_URL ?? 'postgresql://torba:torba@localhost:5432/torba?schema=public',
-  }),
+  adapter: new PrismaPg({ connectionString: getDatabaseUrl() }),
 });
 
 type CategorySeed = {
@@ -196,6 +200,10 @@ const slugify = (s: string) => {
 };
 
 async function main() {
+  if (process.env.NODE_ENV === 'production' && process.env.ALLOW_PROD_SEED !== 'true') {
+    throw new Error('Refusing to wipe and seed a production database');
+  }
+
   await prisma.product.deleteMany();
   await prisma.banner.deleteMany();
   await prisma.location.deleteMany();
@@ -245,6 +253,7 @@ async function main() {
         oldPrice,
         badge,
         deliveryType,
+        isTrending: true,
         trendScore: products.length - i,
         categoryId: categoryIds.get(cat)!,
         locationId: locationIds.get(city)!,

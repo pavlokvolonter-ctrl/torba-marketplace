@@ -111,7 +111,7 @@ Home page endpoints (Swagger UI: <http://localhost:4000/api/docs>):
 | `GET /api/products/trending?page=&limit=` | "Trending" with Show more pagination |
 | `GET /api/locations`                      | Regions / cities                     |
 
-Needs any PostgreSQL; set `DATABASE_URL` (see `.env.example`), then from `apps/api`:
+Set `DATABASE_URL` (see `.env.example`), then from `apps/api`:
 
 ```bash
 bunx prisma migrate deploy   # apply migrations
@@ -130,7 +130,7 @@ Rebuild after changes: `bun run build:shared` (also runs automatically before `d
 | Layer           | Choice                                                                             |
 | --------------- | ---------------------------------------------------------------------------------- |
 | Web             | Next.js (App Router) · TypeScript strict · Tailwind · react-i18next · lucide-react |
-| API             | NestJS · TypeScript · Prisma + PostgreSQL (planned)                                |
+| API             | NestJS · TypeScript · Prisma + PostgreSQL · Swagger                                |
 | Shared          | TypeScript package `@torba/shared`                                                 |
 | Package manager | **Bun** (preferred)                                                                |
 | Quality         | ESLint (web) · Oxlint (api) · Prettier · Vitest                                    |
@@ -142,7 +142,7 @@ Rebuild after changes: `bun run build:shared` (also runs automatically before `d
 
 ```bash
 bun install
-cp .env.example .env   # optional
+cp .env.example .env   # API requires DATABASE_URL
 
 bun run dev            # web + api together
 bun run dev:web        # http://localhost:3000
