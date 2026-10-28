@@ -47,7 +47,10 @@ function parseJson(path: string): VitestJson | null {
   }
 }
 
-function statsFromJson(json: VitestJson | null, ok: boolean): Omit<PackageResult, 'name' | 'durationMs'> {
+function statsFromJson(
+  json: VitestJson | null,
+  ok: boolean,
+): Omit<PackageResult, 'name' | 'durationMs'> {
   if (!json) {
     return { ok, files: 0, tests: 0, passed: 0, failed: ok ? 0 : 1, skipped: 0 };
   }

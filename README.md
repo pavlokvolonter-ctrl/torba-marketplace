@@ -7,47 +7,47 @@ Cursor agents load project rules from [`.cursor/rules/`](.cursor/rules/) (git fl
 
 ## Links
 
-| What | URL |
-| --- | --- |
-| **Figma** | [Marketplace — torba](https://www.figma.com/design/imQzlvJcm0EMhvUqr3kQFZ/Marketplace--torba?node-id=0-1&m=dev&t=qPg6j28l1Yd7lLL2-1) |
-| **GitHub** | [pavlokvolonter-ctrl/torba-marketplace](https://github.com/pavlokvolonter-ctrl/torba-marketplace) |
-| **Web deploy** | Vercel — Root Directory = `apps/web` |
-| **API deploy** | Later (separate host) |
+| What           | URL                                                                                                                                  |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Figma**      | [Marketplace — torba](https://www.figma.com/design/imQzlvJcm0EMhvUqr3kQFZ/Marketplace--torba?node-id=0-1&m=dev&t=qPg6j28l1Yd7lLL2-1) |
+| **GitHub**     | [pavlokvolonter-ctrl/torba-marketplace](https://github.com/pavlokvolonter-ctrl/torba-marketplace)                                    |
+| **Web deploy** | Vercel — Root Directory = `apps/web`                                                                                                 |
+| **API deploy** | Later (separate host)                                                                                                                |
 
 ### Vercel (web)
 
 In the project settings:
 
-| Setting | Value |
-| --- | --- |
-| **Root Directory** | `apps/web` (not repo root) |
+| Setting             | Value                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------- |
+| **Root Directory**  | `apps/web` (not repo root)                                                                          |
 | **Install / Build** | handled by `apps/web/vercel.json` (install from monorepo root, build `@torba/shared`, then Next.js) |
-| **Framework** | Next.js |
+| **Framework**       | Next.js                                                                                             |
 
 Include files outside the Root Directory in the Build Step should stay **enabled** (default for monorepos).
 
 ### Design workflow
 
-| Figma tab | Meaning |
-| --- | --- |
-| **Design / WIP** | Still drafting — do not implement |
-| **Ready for Dev** | Approved — safe to build |
+| Figma tab         | Meaning                           |
+| ----------------- | --------------------------------- |
+| **Design / WIP**  | Still drafting — do not implement |
+| **Ready for Dev** | Approved — safe to build          |
 
 ## Team
 
-| Role | Who | Works in |
-| --- | --- | --- |
-| Architecture / review | Pavlo | whole repo |
-| Frontend | Kateryna | `apps/web` |
-| Backend | Bohdan | `apps/api` |
-| Shared contracts | FE + BE | `packages/shared` |
-| UI/UX | Maria | Figma |
-| PM | Dilik | tickets |
-| QA | Liuba | testing |
+| Role                  | Who      | Works in          |
+| --------------------- | -------- | ----------------- |
+| Architecture / review | Pavlo    | whole repo        |
+| Frontend              | Kateryna | `apps/web`        |
+| Backend               | Bohdan   | `apps/api`        |
+| Shared contracts      | FE + BE  | `packages/shared` |
+| UI/UX                 | Maria    | Figma             |
+| PM                    | Dilik    | tickets           |
+| QA                    | Liuba    | testing           |
 
 ## MVP (v1)
 
-**In scope:** Home · Catalog / Search · Product page · Cart sidebar · Checkout  
+**In scope:** Home · Catalog / Search · Product page · Cart sidebar · Checkout
 
 **Out of scope:** seller dashboard
 
@@ -94,7 +94,29 @@ src/
   app.service.ts
 ```
 
-Prisma + PostgreSQL will live here when the API grows.
+```text
+prisma/                  schema.prisma, migrations, seed.ts
+src/
+  categories/ banners/ products/ locations/   controller + service + dto + spec
+  prisma/                PrismaService (global)
+```
+
+Home page endpoints (Swagger UI: <http://localhost:4000/api/docs>):
+
+| Endpoint                                  | Purpose                              |
+| ----------------------------------------- | ------------------------------------ |
+| `GET /api/categories`                     | Category tree with subcategories     |
+| `GET /api/categories/popular`             | Popular categories block             |
+| `GET /api/banners`                        | Slider banners + featured campaigns  |
+| `GET /api/products/trending?page=&limit=` | "Trending" with Show more pagination |
+| `GET /api/locations`                      | Regions / cities                     |
+
+Set `DATABASE_URL` (see `.env.example`), then from `apps/api`:
+
+```bash
+bunx prisma migrate deploy   # apply migrations
+bunx prisma db seed          # test data (re-runnable)
+```
 
 ### `packages/shared`
 
@@ -105,14 +127,14 @@ Rebuild after changes: `bun run build:shared` (also runs automatically before `d
 
 ## Stack
 
-| Layer | Choice |
-| --- | --- |
-| Web | Next.js (App Router) · TypeScript strict · Tailwind · react-i18next · lucide-react |
-| API | NestJS · TypeScript · Prisma + PostgreSQL (planned) |
-| Shared | TypeScript package `@torba/shared` |
-| Package manager | **Bun** (preferred) |
-| Quality | ESLint (web) · Oxlint (api) · Prettier · Vitest |
-| Later | Husky · RTK Query · Vercel CI |
+| Layer           | Choice                                                                             |
+| --------------- | ---------------------------------------------------------------------------------- |
+| Web             | Next.js (App Router) · TypeScript strict · Tailwind · react-i18next · lucide-react |
+| API             | NestJS · TypeScript · Prisma + PostgreSQL · Swagger                                |
+| Shared          | TypeScript package `@torba/shared`                                                 |
+| Package manager | **Bun** (preferred)                                                                |
+| Quality         | ESLint (web) · Oxlint (api) · Prettier · Vitest                                    |
+| Later           | Husky · RTK Query · Vercel CI                                                      |
 
 ---
 
@@ -120,7 +142,7 @@ Rebuild after changes: `bun run build:shared` (also runs automatically before `d
 
 ```bash
 bun install
-cp .env.example .env   # optional
+cp .env.example .env   # API requires DATABASE_URL
 
 bun run dev            # web + api together
 bun run dev:web        # http://localhost:3000
@@ -129,17 +151,17 @@ bun run dev:api        # http://localhost:4000 → GET /api/health
 
 ### Scripts (from repo root)
 
-| Command | What it does |
-| --- | --- |
-| `bun run dev` | Start web + api |
-| `bun run build` | Build shared → api → web |
-| `bun run lint` | Lint web + api |
-| `bun run format` | Prettier write |
-| `bun run test` | All packages + final Pass/Fail summary |
-| `bun run test:web` | Web only |
-| `bun run test:api` | API only |
-| `bun run test:shared` | Shared only |
-| `bun run test:watch` | Web Vitest watch |
+| Command               | What it does                           |
+| --------------------- | -------------------------------------- |
+| `bun run dev`         | Start web + api                        |
+| `bun run build`       | Build shared → api → web               |
+| `bun run lint`        | Lint web + api                         |
+| `bun run format`      | Prettier write                         |
+| `bun run test`        | All packages + final Pass/Fail summary |
+| `bun run test:web`    | Web only                               |
+| `bun run test:api`    | API only                               |
+| `bun run test:shared` | Shared only                            |
+| `bun run test:watch`  | Web Vitest watch                       |
 
 ### Environment
 
@@ -157,11 +179,11 @@ WEB_ORIGIN=http://localhost:3000
 
 Write tests **next to the code** they cover:
 
-| Package | Files | Tooling |
-| --- | --- | --- |
-| `apps/web` | `*.test.ts(x)` | Vitest + Testing Library |
-| `apps/api` | `*.spec.ts` | Vitest + Nest testing |
-| `packages/shared` | `*.spec.ts` | Vitest |
+| Package           | Files          | Tooling                  |
+| ----------------- | -------------- | ------------------------ |
+| `apps/web`        | `*.test.ts(x)` | Vitest + Testing Library |
+| `apps/api`        | `*.spec.ts`    | Vitest + Nest testing    |
+| `packages/shared` | `*.spec.ts`    | Vitest                   |
 
 **Do test:** hooks, mappers, validators, money/format helpers, API handlers.  
 **Skip:** pure layout / no-op shell controls.

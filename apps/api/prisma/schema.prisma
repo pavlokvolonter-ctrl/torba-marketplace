@@ -1,0 +1,75 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum DeliveryType {
+  NOVA_POSHTA
+  UKRPOSHTA
+  PICKUP
+  COURIER
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  slug      String     @unique
+  name      String
+  icon      String?
+  isPopular Boolean    @default(false)
+  order     Int        @default(0)
+  parentId  String?
+  parent    Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children  Category[] @relation("CategoryTree")
+  products  Product[]
+
+  @@index([parentId])
+}
+
+model Location {
+  id       String    @id @default(cuid())
+  name     String
+  /// Oblast name for cities; null for the oblast itself.
+  region   String?
+  products Product[]
+
+  @@unique([name, region])
+}
+
+model Product {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  title        String
+  image        String
+  /// Major units (UAH).
+  price        Int
+  oldPrice     Int?
+  badge        String?
+  deliveryType DeliveryType
+  isTrending   Boolean      @default(false)
+  trendScore   Int          @default(0)
+  createdAt    DateTime     @default(now())
+  categoryId   String
+  category     Category     @relation(fields: [categoryId], references: [id])
+  locationId   String
+  location     Location     @relation(fields: [locationId], references: [id])
+
+  @@index([isTrending, trendScore, createdAt])
+}
+
+model Banner {
+  id         String  @id @default(cuid())
+  title      String
+  text       String?
+  imageUrl   String
+  ctaLabel   String?
+  href       String?
+  order      Int     @default(0)
+  isFeatured Boolean @default(false)
+  isActive   Boolean @default(true)
+}
