@@ -11,11 +11,11 @@ Full details: root `README.md`. Apply to every branch, commit, PR, and **generat
 
 - Land on `main` only via PR + review
 - One ticket = one branch
-- Feature: `feature/pe-<number>-<short-kebab-slug>` (English, lowercase)
+- Feature: `feature/zetan01-<number>-<short-kebab-slug>` (English, lowercase)
 - Fix with no new behavior: `fix/<short-kebab-slug>`
 
 ```text
-feature/pe-10354-home-page
+feature/zetan01-8-home-page
 fix/cart-overlay-scroll-lock
 ```
 
@@ -38,20 +38,20 @@ Format:
 - Folder = `apps/web` | `apps/api` | `packages/shared` when **one** area dominates
 - Changes across monorepo root + multiple apps → **omit** `(folder)`
 - After `:` lowercase outcome (what landed), not a file list
-- Ticket when known: `[PE-10354]`
+- Ticket when known: `[ZETAN01-8]`
 
 ```text
 # good — scaffold spans web + api + shared + root
 feat: scaffold the web/api monorepo with shared types, tooling, and docs
 
 # good — single area
-feat(apps/web): [PE-10354] add the home page shell
+feat(apps/web): [ZETAN01-8] add the home page shell
 
 # bad — ignores most of the diff
 docs: update README.md with project overview
 ```
 
-PR title = what lands on `main` (same style, or `[PE-10354] Add …`).
+PR title = what lands on `main`; PR body follows `.github/pull_request_template.md` and always ends with screenshots (same style, or `[ZETAN01-8] Add …`).
 
 ## Never put in commits
 
