@@ -8,7 +8,7 @@ type AppShellProps = {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="flex min-h-full flex-col bg-[var(--color-canvas)]">
+    <div className="flex min-h-full flex-col bg-(--color-canvas)">
       <Header />
       <Container as="main" className="flex flex-1 flex-col">
         {children}
