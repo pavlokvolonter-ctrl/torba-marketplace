@@ -1,7 +1,7 @@
 'use client';
 
 import { Check, SearchMd } from '@untitledui/icons';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -13,9 +13,10 @@ import { localized } from '@/shared/lib/localized';
 type LocationMenuProps = {
   selectedId: string;
   onSelect: (id: string) => void;
+  className?: string;
 };
 
-export function LocationMenu({ selectedId, onSelect }: LocationMenuProps) {
+export function LocationMenu({ selectedId, onSelect, className }: LocationMenuProps) {
   const { t, i18n } = useTranslation();
   const [query, setQuery] = useState('');
 
@@ -28,7 +29,11 @@ export function LocationMenu({ selectedId, onSelect }: LocationMenuProps) {
   return (
     <div
       id="header-location-menu"
-      className="absolute top-full right-0 z-50 mt-3 w-90 rounded-2xl border border-(--color-border) bg-(--color-surface) p-3 shadow-lg"
+      className={cn(
+        'z-50 rounded-2xl border border-(--color-border) bg-(--color-surface) p-3 shadow-lg',
+        'absolute top-full right-0 mt-3 w-[min(22.5rem,calc(100vw-2rem))]',
+        className,
+      )}
     >
       <Input
         size="sm"
@@ -40,9 +45,10 @@ export function LocationMenu({ selectedId, onSelect }: LocationMenuProps) {
         iconLeading={<SearchMd aria-hidden />}
       />
 
+      {/* TODO: restore with navigator.geolocation (separate ticket).
       <button
         type="button"
-        className="mt-2 flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm font-medium text-primary-700 hover:bg-primary-50"
+        className="mt-2 flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm font-medium text-(--color-brand) hover:bg-(--color-brand-subtle)"
       >
         <Image
           src="/icons/locate-fixed.svg"
@@ -55,6 +61,7 @@ export function LocationMenu({ selectedId, onSelect }: LocationMenuProps) {
         />
         {t('nav.currentLocation')}
       </button>
+      */}
 
       {hasQuery ? null : (
         <p className="mt-3 px-2 text-sm text-(--color-muted)">{t('nav.popularCities')}</p>
@@ -72,10 +79,10 @@ export function LocationMenu({ selectedId, onSelect }: LocationMenuProps) {
                   onClick={() => onSelect(location.id)}
                   className={cn(
                     'flex w-full items-center gap-3 rounded-lg px-2 py-2.5 text-left',
-                    selected ? 'bg-primary-100' : 'hover:bg-(--color-surface-muted)',
+                    selected ? 'bg-(--color-brand-muted)' : 'hover:bg-(--color-surface-muted)',
                   )}
                 >
-                  <span className="min-w-0 flex-1 truncate">
+                  <span className="min-w-0 flex-1">
                     <span className="text-sm font-semibold text-(--color-ink)">
                       {localized(location.city, i18n.language)}
                     </span>
@@ -84,7 +91,7 @@ export function LocationMenu({ selectedId, onSelect }: LocationMenuProps) {
                     </span>
                   </span>
                   {selected ? (
-                    <Check className="size-4 shrink-0 text-primary-700" aria-hidden />
+                    <Check className="size-4 shrink-0 text-(--color-brand)" aria-hidden />
                   ) : null}
                 </button>
               </li>

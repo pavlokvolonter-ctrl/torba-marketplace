@@ -9,6 +9,9 @@ export type CatalogCategory = CatalogLink & {
   children: CatalogLink[];
 };
 
+// Temporary FE mock from Figma Ready for Dev.
+// TODO: replace with GET /api/categories (ZETAN01-7) and shared Category from @torba/shared
+// once BE slugs match the design (see sync with Bohdan / ZETAN01-7 seed).
 export const catalogCategories: CatalogCategory[] = [
   {
     slug: 'furniture',

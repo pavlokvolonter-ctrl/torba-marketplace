@@ -79,7 +79,6 @@ src/
   shared/
     config/              Site + navigation config
     lib/                 Helpers (e.g. cn)
-tests/                   Vitest specs (mirrors src/)
 ```
 
 Current UI is a **shell only**: nav links to stub pages, search/cart controls are no-ops.  
@@ -156,11 +155,13 @@ WEB_ORIGIN=http://localhost:3000
 
 ## Testing
 
-| Package | Where | Tooling |
+Write tests **next to the code** they cover:
+
+| Package | Files | Tooling |
 | --- | --- | --- |
-| `apps/web` | `tests/**/*.test.ts(x)` (mirrors `src/`) | Vitest + Testing Library |
-| `apps/api` | co-located `*.spec.ts` | Vitest + Nest testing |
-| `packages/shared` | co-located `*.spec.ts` | Vitest |
+| `apps/web` | `*.test.ts(x)` | Vitest + Testing Library |
+| `apps/api` | `*.spec.ts` | Vitest + Nest testing |
+| `packages/shared` | `*.spec.ts` | Vitest |
 
 **Do test:** hooks, mappers, validators, money/format helpers, API handlers.  
 **Skip:** pure layout / no-op shell controls.

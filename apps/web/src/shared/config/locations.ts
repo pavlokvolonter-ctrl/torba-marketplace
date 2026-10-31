@@ -1,6 +1,9 @@
 import type { LocalizedText } from '@/shared/lib/localized';
 import { localized } from '@/shared/lib/localized';
 
+// Temporary FE mock (uk/en LocalizedText) for the header city picker.
+// TODO: replace with GET /api/locations (ZETAN01-7) and shared Location from @torba/shared
+// after agreeing with BE how translations work (?lang= vs bilingual payload).
 export type CityLocation = {
   id: string;
   city: LocalizedText;

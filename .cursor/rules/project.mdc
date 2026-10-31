@@ -29,6 +29,6 @@ Learning OLX-style marketplace. Prefer Bun. Docs: root `README.md` + Figma Ready
 - Web: keep the shell simple until Ready for Dev — stub pages, no-op controls
 - Add `apps/web/src/features/<name>/` only with real feature logic
 - Import shared types from `@torba/shared`
-- Web tests live in `apps/web/tests/` (`*.test.ts(x)`); api/shared keep co-located `*.spec.ts`; test logic, not pure layout
+- Tests next to code (`*.test.ts(x)` / `*.spec.ts`); test logic, not pure layout
 - After shared type changes: `bun run build:shared`
 - Run `bun run test` / `bun run lint` from the repo root when verifying

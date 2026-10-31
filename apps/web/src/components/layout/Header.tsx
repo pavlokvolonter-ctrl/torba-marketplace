@@ -9,9 +9,14 @@ import {
   ShoppingCart01,
   User01,
 } from '@untitledui/icons';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+  type RefObject,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CategoryMenu } from '@/components/layout/CategoryMenu';
@@ -19,6 +24,7 @@ import { LocationMenu } from '@/components/layout/LocationMenu';
 import { MegaMenu } from '@/components/layout/MegaMenu';
 import { Container } from '@/components/ui/Container';
 import { Input } from '@/components/ui/Input';
+import { Logo } from '@/components/ui/Logo';
 import { featuredCategories } from '@/shared/config/categories';
 import { defaultLocationId, findLocation } from '@/shared/config/locations';
 import { cn } from '@/shared/lib/cn';
@@ -26,17 +32,73 @@ import { localized } from '@/shared/lib/localized';
 
 type HeaderPanel = 'categories' | 'location' | null;
 
+function isApplePlatform() {
+  return /Mac|iPhone|iPad|iPod/.test(navigator.platform) || navigator.userAgent.includes('Mac');
+}
+
+function useIsApplePlatform() {
+  return useSyncExternalStore(
+    () => () => {},
+    isApplePlatform,
+    () => false,
+  );
+}
+
+function subscribeMdUp(onStoreChange: () => void) {
+  const media = window.matchMedia('(min-width: 768px)');
+  media.addEventListener('change', onStoreChange);
+  return () => media.removeEventListener('change', onStoreChange);
+}
+
+function useIsMdUp() {
+  return useSyncExternalStore(
+    subscribeMdUp,
+    () => window.matchMedia('(min-width: 768px)').matches,
+    () => true,
+  );
+}
+
+function focusVisibleSearch(
+  desktopRef: RefObject<HTMLInputElement | null>,
+  mobileRef: RefObject<HTMLInputElement | null>,
+) {
+  const desktop = desktopRef.current;
+  const mobile = mobileRef.current;
+
+  if (desktop && desktop.getClientRects().length > 0) {
+    desktop.focus();
+    return;
+  }
+
+  mobile?.focus();
+}
+
 export function Header() {
   const { t, i18n } = useTranslation();
   const rootRef = useRef<HTMLElement>(null);
+  const desktopSearchRef = useRef<HTMLInputElement>(null);
+  const mobileSearchRef = useRef<HTMLInputElement>(null);
   const [openPanel, setOpenPanel] = useState<HeaderPanel>(null);
   const [categorySlug, setCategorySlug] = useState<string | null>(null);
+  // TODO: lift selected city into shared context/store + localStorage so catalog
+  // location filters (and other pages) stay in sync across reloads and routes.
   const [locationId, setLocationId] = useState(defaultLocationId);
+  const isApple = useIsApplePlatform();
+  const isMdUp = useIsMdUp();
 
   const location = findLocation(locationId);
+  const locationLabel = localized(location.city, i18n.language);
   const categoriesOpen = openPanel === 'categories';
   const locationOpen = openPanel === 'location';
   const menuOpen = openPanel !== null || categorySlug !== null;
+  const locationAriaLabel = `${t('nav.location')}: ${locationLabel}`;
+  const showMobileLocationMenu = locationOpen && !isMdUp;
+  const showDesktopLocationMenu = locationOpen && isMdUp;
+
+  const selectLocation = (id: string) => {
+    setLocationId(id);
+    setOpenPanel(null);
+  };
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -45,7 +107,7 @@ export function Header() {
       }
 
       event.preventDefault();
-      document.getElementById('header-search')?.focus();
+      focusVisibleSearch(desktopSearchRef, mobileSearchRef);
     };
 
     document.addEventListener('keydown', onKeyDown);
@@ -96,35 +158,70 @@ export function Header() {
   return (
     <header
       ref={rootRef}
-      className="sticky top-0 z-40 border-b border-(--color-border) bg-(--color-surface)"
+      className="sticky top-0 z-40 overflow-x-clip border-b border-(--color-border) bg-(--color-surface)"
     >
-      <Container className="flex h-20 items-center gap-4 lg:gap-7">
-        <Link href="/" className="shrink-0">
-          <Image
-            src="/icons/Logo.svg"
-            alt={t('brand.name')}
-            width={146}
-            height={31}
-            className="h-7.75 w-auto"
-            priority
-            unoptimized
+      <Container className="md:hidden">
+        <div className="relative flex h-14 items-center gap-2">
+          <Logo variant="mark" priority />
+          <Input
+            ref={mobileSearchRef}
+            variant="search"
+            size="sm"
+            type="search"
+            iconLeading={<SearchMd aria-hidden />}
+            placeholder={t('nav.searchPlaceholder')}
+            aria-label={t('nav.searchPlaceholder')}
+            className="min-w-0 flex-1"
           />
-        </Link>
+          <button
+            type="button"
+            className={cn(
+              'inline-flex size-10 shrink-0 items-center justify-center rounded-lg transition-colors',
+              locationOpen
+                ? 'text-(--color-brand)'
+                : 'text-(--color-ink) hover:bg-(--color-surface-muted)',
+            )}
+            aria-expanded={locationOpen}
+            aria-controls="header-location-menu"
+            aria-label={locationAriaLabel}
+            onClick={() => togglePanel('location')}
+          >
+            <MarkerPin01 className="size-5" aria-hidden />
+          </button>
+          <button
+            type="button"
+            className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-(--color-border) text-(--color-ink)"
+            aria-label={t('nav.cart')}
+          >
+            <ShoppingCart01 className="size-5" aria-hidden />
+          </button>
+          {showMobileLocationMenu ? (
+            <LocationMenu
+              selectedId={locationId}
+              onSelect={selectLocation}
+              className="left-0 right-0 w-full max-w-none"
+            />
+          ) : null}
+        </div>
+      </Container>
+
+      <Container className="hidden h-20 items-center gap-4 md:flex lg:gap-7">
+        <Logo priority />
 
         <Input
-          id="header-search"
+          ref={desktopSearchRef}
           variant="search"
           size="md"
           type="search"
           iconLeading={<SearchMd aria-hidden />}
-          trailing={<SearchShortcut />}
+          trailing={<SearchShortcut isApple={isApple} />}
           placeholder={t('nav.searchPlaceholder')}
           aria-label={t('nav.searchPlaceholder')}
-          aria-keyshortcuts="Meta+K"
-          className="hidden min-w-0 flex-1 md:flex"
+          aria-keyshortcuts={isApple ? 'Meta+K' : 'Control+K'}
+          className="min-w-0 flex-1"
         />
 
-        <div className="ml-auto flex items-center gap-2 sm:gap-4">
+        <div className="ml-auto flex items-center gap-4">
           <HeaderAction icon={<Heart className="size-5" aria-hidden />} label={t('nav.favorites')} />
           <HeaderAction
             icon={<ShoppingCart01 className="size-5" aria-hidden />}
@@ -134,7 +231,7 @@ export function Header() {
         </div>
       </Container>
 
-      <div className="relative border-t border-(--color-border)">
+      <div className="relative hidden border-t border-(--color-border) md:block">
         <Container className="flex h-11 items-center gap-5">
           <button
             type="button"
@@ -193,21 +290,15 @@ export function Header() {
               )}
               aria-expanded={locationOpen}
               aria-controls="header-location-menu"
-              aria-label={t('nav.location')}
+              aria-label={locationAriaLabel}
               onClick={() => togglePanel('location')}
             >
               <MarkerPin01 className="size-5" aria-hidden />
-              {localized(location.city, i18n.language)}
+              {locationLabel}
               <ChevronDown className="size-4" aria-hidden />
             </button>
-            {locationOpen ? (
-              <LocationMenu
-                selectedId={locationId}
-                onSelect={(id) => {
-                  setLocationId(id);
-                  setOpenPanel(null);
-                }}
-              />
+            {showDesktopLocationMenu ? (
+              <LocationMenu selectedId={locationId} onSelect={selectLocation} />
             ) : null}
           </div>
         </Container>
@@ -224,13 +315,15 @@ export function Header() {
   );
 }
 
-function SearchShortcut() {
+function SearchShortcut({ isApple }: { isApple: boolean }) {
   return (
     <span
       aria-hidden
-      className="header-search-shortcut pointer-events-none inline-flex items-center font-sans font-medium text-(--color-muted)"
+      className="header-search-shortcut pointer-events-none inline-flex items-center gap-0.5 font-sans font-medium text-(--color-muted)"
     >
-      <span className="inline-flex size-4 items-center justify-center text-[12px]/none">⌘</span>
+      <span className="inline-flex items-center justify-center text-[12px]/none">
+        {isApple ? '⌘' : 'Ctrl'}
+      </span>
       <span className="inline-flex size-4 items-center justify-center text-[14px]/none">K</span>
     </span>
   );

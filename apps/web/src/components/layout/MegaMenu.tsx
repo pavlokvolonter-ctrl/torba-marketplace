@@ -16,7 +16,7 @@ export function MegaMenu({ onNavigate }: MegaMenuProps) {
   return (
     <div
       id="header-mega-menu"
-      className="grid grid-cols-2 gap-x-8 gap-y-8 py-6 sm:grid-cols-3 lg:grid-cols-6"
+      className="grid grid-cols-2 gap-x-6 gap-y-6 py-4 sm:grid-cols-3 sm:gap-x-8 sm:gap-y-8 sm:py-6 lg:grid-cols-6"
     >
       {catalogCategories.map((category) => (
         <div key={category.slug}>

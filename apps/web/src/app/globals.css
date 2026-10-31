@@ -3,14 +3,14 @@
 @theme {
   --color-primary-50: #fafcff;
   --color-primary-100: #eef3ff;
-  --color-primary-200: #eef3ff;
+  --color-primary-200: #d9e4ff;
   --color-primary-300: #afc3f3;
   --color-primary-400: #9eb5f1;
   --color-primary-500: #8cabee;
   --color-primary-600: #4773e4;
   --color-primary-700: #2459df;
   --color-primary-800: #1e4bbd;
-  --color-primary-900: #1e4bbd;
+  --color-primary-900: #183d9a;
 
   --color-dark-100: #f5f6f3;
   --color-dark-150: #e5ebe5;
@@ -24,7 +24,7 @@
   --color-dark-900: #1a1f1e;
 
   --color-red-50: #fef2f2;
-  --color-red-100: #fef2f2;
+  --color-red-100: #fee2e2;
   --color-red-200: #fecaca;
   --color-red-300: #fca5a5;
   --color-red-400: #f87171;
@@ -83,8 +83,8 @@
   --color-border: var(--color-dark-200);
   --color-brand: var(--color-primary-700);
   --color-brand-hover: var(--color-primary-800);
-  --color-accent: var(--color-primary-700);
-  --color-accent-hover: var(--color-primary-800);
+  --color-brand-muted: var(--color-primary-100);
+  --color-brand-subtle: var(--color-primary-50);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 }
