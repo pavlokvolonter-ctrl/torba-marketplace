@@ -7,19 +7,59 @@
     "catalog": "Catalog",
     "checkout": "Checkout",
     "cart": "Cart",
-    "searchPlaceholder": "Search products…"
+    "searchPlaceholder": "I'm looking for...",
+    "allCategories": "All categories",
+    "favorites": "Favorites",
+    "account": "Account",
+    "location": "City",
+    "locationSearch": "Start typing",
+    "currentLocation": "Current location",
+    "popularCities": "Popular cities",
+    "noCities": "No cities found"
   },
   "footer": {
+    "tagline": "Torba is a marketplace that brings buyers and sellers together for easy everyday shopping.",
     "rights": "All rights reserved.",
-    "about": "About Torba",
-    "support": "Support",
-    "sellers": "For sellers (soon)"
+    "forYou": "Discover for yourself",
+    "useful": "Useful information",
+    "help": "Need help?",
+    "categories": "Categories",
+    "new": "New arrivals",
+    "trends": "Trends",
+    "recommended": "Torba recommends",
+    "about": "About the company",
+    "payments": "Payment methods",
+    "warranty": "Warranty",
+    "faq": "Common questions",
+    "delivery": "Delivery and returns",
+    "contacts": "Contact information",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "region": "Ukraine · UAH",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "email": "Email"
   },
   "pages": {
     "home": {
       "title": "Home",
-      "description": "Content will appear after Ready for Dev designs."
+      "description": "Content will appear after Ready for Dev designs.",
+      "banners": "Banners",
+      "bannerPrev": "Previous banner",
+      "bannerNext": "Next banner",
+      "popularCategories": "Popular categories",
+      "catalogLink": "Catalog",
+      "trending": "Trending now",
+      "trendingLink": "Trend products",
+      "badgeNew": "New",
+      "showMore": "Show more",
+      "sellerInviteTitle": "Open new opportunities for your business",
+      "sellerInviteSubtitle": "Thousands of products on <brand>torba</brand> are waiting for you",
+      "campaignCta": "Go",
+      "sellerInviteCta": "Go to catalog"
     },
+
+
     "catalog": {
       "title": "Catalog",
       "description": "Content will appear after Ready for Dev designs."
@@ -31,10 +71,50 @@
     "checkout": {
       "title": "Checkout",
       "description": "Content will appear after Ready for Dev designs."
+    },
+    "new": {
+      "title": "New arrivals",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "trends": {
+      "title": "Trends",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "recommended": {
+      "title": "Torba recommends",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "about": {
+      "title": "About the company",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "payments": {
+      "title": "Payment methods",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "warranty": {
+      "title": "Warranty",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "faq": {
+      "title": "Common questions",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "delivery": {
+      "title": "Delivery and returns",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "contacts": {
+      "title": "Contact information",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "description": "Content will appear after Ready for Dev designs."
+    },
+    "terms": {
+      "title": "Terms of use",
+      "description": "Content will appear after Ready for Dev designs."
     }
-  },
-  "language": {
-    "uk": "UA",
-    "en": "EN"
   }
 }

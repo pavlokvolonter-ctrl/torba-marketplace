@@ -1,19 +1,20 @@
 import type { Metadata } from 'next';
-import { Manrope, Source_Serif_4 } from 'next/font/google';
+import { Bruno_Ace, Inter } from 'next/font/google';
 
 import { Providers } from '@/app/providers';
 import { siteConfig } from '@/shared/config/site';
 
 import './globals.css';
 
-const bodyFont = Manrope({
+const bodyFont = Inter({
   variable: '--font-body',
   subsets: ['latin', 'cyrillic'],
 });
 
-const displayFont = Source_Serif_4({
-  variable: '--font-display',
-  subsets: ['latin', 'cyrillic'],
+const brandFont = Bruno_Ace({
+  variable: '--font-bruno',
+  weight: '400',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
@@ -22,14 +23,14 @@ export const metadata: Metadata = {
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  icons: {
+    icon: '/icons/Brandmark.svg',
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html
-      lang={siteConfig.defaultLocale}
-      className={`${bodyFont.variable} ${displayFont.variable} h-full`}
-    >
+    <html lang={siteConfig.defaultLocale} className={`${bodyFont.variable} ${brandFont.variable} h-full`}>
       <body className="min-h-full antialiased">
         <Providers>{children}</Providers>
       </body>
