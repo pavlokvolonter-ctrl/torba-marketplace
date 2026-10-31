@@ -43,8 +43,23 @@
   "pages": {
     "home": {
       "title": "Home",
-      "description": "Content will appear after Ready for Dev designs."
+      "description": "Content will appear after Ready for Dev designs.",
+      "banners": "Banners",
+      "bannerPrev": "Previous banner",
+      "bannerNext": "Next banner",
+      "popularCategories": "Popular categories",
+      "catalogLink": "Catalog",
+      "trending": "Trending now",
+      "trendingLink": "Trend products",
+      "badgeNew": "New",
+      "showMore": "Show more",
+      "sellerInviteTitle": "Open new opportunities for your business",
+      "sellerInviteSubtitle": "Thousands of products on <brand>torba</brand> are waiting for you",
+      "campaignCta": "Go",
+      "sellerInviteCta": "Go to catalog"
     },
+
+
     "catalog": {
       "title": "Catalog",
       "description": "Content will appear after Ready for Dev designs."

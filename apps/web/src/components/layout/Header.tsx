@@ -179,7 +179,7 @@ export function Header() {
               'inline-flex size-10 shrink-0 items-center justify-center rounded-lg transition-colors',
               locationOpen
                 ? 'text-(--color-brand)'
-                : 'text-(--color-ink) hover:bg-(--color-surface-muted)',
+                : 'text-(--color-dark-900) hover:bg-(--color-surface-muted)',
             )}
             aria-expanded={locationOpen}
             aria-controls="header-location-menu"
@@ -236,34 +236,34 @@ export function Header() {
           <button
             type="button"
             className={cn(
-              'inline-flex shrink-0 items-center gap-2 text-sm font-medium transition-colors',
+              'inline-flex h-11 shrink-0 items-center gap-2 text-[13px] leading-5 font-semibold transition-colors',
               categoriesOpen
                 ? 'text-(--color-brand)'
-                : 'text-(--color-ink) hover:text-(--color-brand)',
+                : 'text-dark-800 hover:text-(--color-brand)',
             )}
             aria-expanded={categoriesOpen}
             aria-controls="header-mega-menu"
             onClick={() => togglePanel('categories')}
           >
-            <LayoutGrid01 className="size-5" aria-hidden />
+            <LayoutGrid01 className="size-4 shrink-0" aria-hidden />
             {t('nav.allCategories')}
           </button>
 
           <nav
-            className="hidden min-w-0 flex-1 items-center gap-5 lg:flex"
+            className="hidden min-w-0 flex-1 items-center gap-5 self-stretch lg:flex"
             aria-label={t('nav.catalog')}
           >
             {featuredCategories().map((category) => {
               const open = categorySlug === category.slug;
               return (
-                <div key={category.slug} className="relative shrink-0">
+                <div key={category.slug} className="relative flex h-full shrink-0 items-center">
                   <button
                     type="button"
                     className={cn(
-                      'text-sm transition-colors',
+                      'inline-flex h-11 items-center text-sm leading-5 font-normal transition-colors',
                       open
-                        ? 'font-medium text-(--color-brand)'
-                        : 'text-(--color-ink) hover:text-(--color-brand)',
+                        ? 'text-(--color-brand)'
+                        : 'text-dark-900 hover:text-(--color-brand)',
                     )}
                     aria-expanded={open}
                     aria-controls={`header-category-${category.slug}`}
@@ -279,23 +279,23 @@ export function Header() {
             })}
           </nav>
 
-          <div className="relative ml-auto shrink-0">
+          <div className="relative ml-auto flex h-11 shrink-0 items-center">
             <button
               type="button"
               className={cn(
-                'inline-flex items-center gap-1.5 text-sm font-medium transition-colors',
+                'inline-flex h-11 items-center gap-1.5 text-xs leading-5 font-normal transition-colors',
                 locationOpen
                   ? 'text-(--color-brand)'
-                  : 'text-(--color-ink) hover:text-(--color-brand)',
+                  : 'text-dark-600 hover:text-(--color-brand)',
               )}
               aria-expanded={locationOpen}
               aria-controls="header-location-menu"
               aria-label={locationAriaLabel}
               onClick={() => togglePanel('location')}
             >
-              <MarkerPin01 className="size-5" aria-hidden />
+              <MarkerPin01 className="size-4 shrink-0" aria-hidden />
               {locationLabel}
-              <ChevronDown className="size-4" aria-hidden />
+              <ChevronDown className="size-3.5 shrink-0" aria-hidden />
             </button>
             {showDesktopLocationMenu ? (
               <LocationMenu selectedId={locationId} onSelect={selectLocation} />

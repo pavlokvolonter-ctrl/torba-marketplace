@@ -10,7 +10,7 @@
   --color-primary-600: #4773e4;
   --color-primary-700: #2459df;
   --color-primary-800: #1e4bbd;
-  --color-primary-900: #183d9a;
+  --color-primary-900: #102967;
 
   --color-dark-100: #f5f6f3;
   --color-dark-150: #e5ebe5;
@@ -35,6 +35,7 @@
   --color-red-900: #7f1d1d;
 
   --color-green: #3b6b65;
+  --color-accent-green: #3b6b50;
   --color-white: #ffffff;
 
   --font-sans: var(--font-body);

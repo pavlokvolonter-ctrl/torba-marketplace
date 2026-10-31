@@ -12,6 +12,8 @@ import { isAppLocale } from '@/i18n/config';
 import { siteConfig, type AppLocale } from '@/shared/config/site';
 import { cn } from '@/shared/lib/cn';
 
+const SOCIAL_ICON_SIZE = 18;
+
 const languageName: Record<AppLocale, string> = {
   uk: 'Українська',
   en: 'English',
@@ -77,8 +79,8 @@ export function Footer() {
                 <Image
                   src="/icons/FacebookIcon.svg"
                   alt=""
-                  width={18}
-                  height={18}
+                  width={SOCIAL_ICON_SIZE}
+                  height={SOCIAL_ICON_SIZE}
                   className="size-[18px]"
                   unoptimized
                   aria-hidden

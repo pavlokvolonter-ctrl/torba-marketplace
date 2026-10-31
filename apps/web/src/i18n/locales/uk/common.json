@@ -43,8 +43,23 @@
   "pages": {
     "home": {
       "title": "Головна",
-      "description": "Контент з’явиться після макетів Ready for Dev."
+      "description": "Контент з’явиться після макетів Ready for Dev.",
+      "banners": "Банери",
+      "bannerPrev": "Попередній банер",
+      "bannerNext": "Наступний банер",
+      "popularCategories": "Популярні категорії",
+      "catalogLink": "Каталог",
+      "trending": "Зараз у тренді",
+      "trendingLink": "Трендові товари",
+      "badgeNew": "Новинка",
+      "showMore": "Показати ще",
+      "sellerInviteTitle": "Відкрий нові можливості для свого бізнесу",
+      "sellerInviteSubtitle": "Тисячі товарів на <brand>torbi</brand> чекають на тебе",
+      "campaignCta": "Перейти",
+      "sellerInviteCta": "Перейти в каталог"
     },
+
+
     "catalog": {
       "title": "Каталог",
       "description": "Контент з’явиться після макетів Ready for Dev."
